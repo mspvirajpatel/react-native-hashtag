@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '../../theme';
+
 
 export default StyleSheet.create({
   container: {
@@ -14,7 +14,7 @@ export default StyleSheet.create({
     height: 32,
     margin: 4,
     borderRadius: 16,
-    backgroundColor: Colors.white
+    backgroundColor: 'white'
   },
 
   textInput: {
@@ -25,12 +25,12 @@ export default StyleSheet.create({
     flex: 1,
     height: 32,
     fontSize: 13,
-    color: Colors.black
+    color: 'black'
   },
 
   tag: {
     justifyContent: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: 'white',
     borderRadius: 16,
     paddingLeft: 12,
     paddingRight: 12,
@@ -39,6 +39,6 @@ export default StyleSheet.create({
   },
   tagLabel: {
     fontSize: 13,
-    color: Colors.black
+    color: 'black'
   }
 });
