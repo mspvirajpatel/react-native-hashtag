@@ -1,1 +1,1 @@
-export * form './components/Tags'
+export * from './components/Tags'
