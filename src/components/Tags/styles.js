@@ -1,0 +1,44 @@
+import { StyleSheet } from 'react-native';
+import { Colors } from '../../theme';
+
+export default StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center'
+  },
+
+  textInputContainer: {
+    flex: 1,
+    minWidth: 100,
+    height: 32,
+    margin: 4,
+    borderRadius: 16,
+    backgroundColor: Colors.white
+  },
+
+  textInput: {
+    margin: 0,
+    padding: 0,
+    paddingLeft: 12,
+    paddingRight: 12,
+    flex: 1,
+    height: 32,
+    fontSize: 13,
+    color: Colors.black
+  },
+
+  tag: {
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+    borderRadius: 16,
+    paddingLeft: 12,
+    paddingRight: 12,
+    height: 32,
+    margin: 4
+  },
+  tagLabel: {
+    fontSize: 13,
+    color: Colors.black
+  }
+});

@@ -1,0 +1,43 @@
+{
+  "name": "react-native-hashtag",
+  "version": "1.0.0",
+  "description": "Multiple Hashtag manage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mspvirajpatel/react-native-hashtag.git"
+  },
+  "keywords": [
+    "react-native",
+    "react-component",
+    "react-native-component",
+    "react",
+    "react native",
+    "mobile",
+    "ios",
+    "android",
+    "ui",
+    "hashtag",
+    "hasttagview",
+    "mutipleHashtag"
+  ],
+  "author": "Viraj Patel",
+  "license": "MIT",
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/mspvirajpatel/react-native-hashtag/issues"
+  },
+  "homepage": "https://github.com/mspvirajpatel/react-native-hashtag#readme",
+  "devDependencies": {
+    "@babel/preset-react": "^7.12.13",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
