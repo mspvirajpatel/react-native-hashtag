@@ -2,7 +2,8 @@
   "name": "react-native-hashtag",
   "version": "1.0.0",
   "description": "Multiple Hashtag manage",
-  "main": "index.js",
+  "main": "src/index.js",
+  "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
