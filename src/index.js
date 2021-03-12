@@ -1,1 +1,1 @@
-export * from './components/Tags'
+export {Tags} from './components/Tags'
