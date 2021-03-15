@@ -1,6 +1,6 @@
 {
   "name": "react-native-hashtag",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Multiple Hashtag manage",
   "main": "src/index.js",
   "module": "src/index.js",
