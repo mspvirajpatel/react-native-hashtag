@@ -1,126 +1,108 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 import Input from './Input';
 import styles from './styles';
 import Tag from './Tag';
 
-class Tags extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tags: props.initialTags,
-      text: props.initialText
-    };
-  }
+const Tags = props => {
+  const {
+    initialTags,
+    containerStyle,
+    style,
+    readonly,
+    createTagOnString,
+    createTagOnReturn,
+    maxNumberOfTags,
+    tagContainerStyle,
+    tagTextStyle,
+    deleteTagOnPress,
+    onTagPress,
+    renderTag
+  } = props;
 
-  showLastTag = () => {
-    this.setState(
-      state => ({
-        tags: state.tags.slice(0, -1),
-        text: state.tags.slice(-1)[0] || ' '
-      }),
-      () => this.props.onChangeTags && this.props.onChangeTags(this.state.tags)
-    );
+  const [tags, setTags] = useState([]);
+  const [text, setText] = useState('');
+
+  useEffect(() => {
+    setTags(initialTags);
+  }, [initialTags]);
+
+  const showLastTag = () => {
+    setTags(tags.slice(0, -1));
+    setText(tags.slice(-1)[0] || ' ')
   };
 
-  addTag = text => {
-    this.setState(
-      state => ({
-        tags: [...state.tags, text.trim()],
-        text: ' '
-      }),
-      () => this.props.onChangeTags && this.props.onChangeTags(this.state.tags)
-    );
+  const addTag = text => {
+    setTags([...tags, text.trim()]);
+    setText('')
   };
 
-  onChangeText = text => {
+  const onChangeText = text => {
     if (text.length === 0) {
-      this.showLastTag();
+      showLastTag();
     } else if (
       text.length > 1 &&
-      this.props.createTagOnString.includes(text.slice(-1)) &&
+      createTagOnString.includes(text.slice(-1)) &&
       !text.match(
-        new RegExp(`^[${this.props.createTagOnString.join('')}]+$`, 'g')
+        new RegExp(`^[${createTagOnString.join('')}]+$`, 'g')
       ) &&
-      !(this.state.tags.indexOf(text.slice(0, -1).trim()) > -1)
+      !(tags.indexOf(text.slice(0, -1).trim()) > -1)
     ) {
-      this.addTag(text.slice(0, -1));
+      addTag(text.slice(0, -1));
     } else {
-      this.setState({ text });
+      setText(text.trim());
     }
   };
 
-  onSubmitEditing = () => {
-    if (!this.props.createTagOnReturn) {
+  const onSubmitEditing = () => {
+    if (!createTagOnReturn) {
       return;
     }
-    this.addTag(this.state.text);
+    addTag(text);
   };
 
-  render() {
-    const {
-      containerStyle,
-      style,
-      readonly,
-      maxNumberOfTags,
-      tagContainerStyle,
-      tagTextStyle,
-      deleteTagOnPress,
-      onTagPress,
-      renderTag
-    } = this.props;
+  return (
+    <View style={[styles.container, containerStyle, style]}>
+      {tags.map((tag, index) => {
+        const tagProps = {
+          tag,
+          index,
+          deleteTagOnPress,
+          onPress: event => {
+            event.persist();
+            if (deleteTagOnPress && !readonly) {
+              setTags([
+                ...tags.slice(0, index),
+                ...tags.slice(index + 1)
+              ]);
+              onTagPress && onTagPress(index, tag, event, true)
+            } else {
+              onTagPress && onTagPress(index, tag, event, false);
+            }
+          },
+          tagContainerStyle,
+          tagTextStyle
+        };
 
-    return (
-      <View style={[styles.container, containerStyle, style]}>
-        {this.state.tags.map((tag, index) => {
-          const tagProps = {
-            tag,
-            index,
-            deleteTagOnPress,
-            onPress: event => {
-              event.persist();
-              if (deleteTagOnPress && !readonly) {
-                this.setState(
-                  state => ({
-                    tags: [
-                      ...state.tags.slice(0, index),
-                      ...state.tags.slice(index + 1)
-                    ]
-                  }),
-                  () => {
-                    this.props.onChangeTags &&
-                      this.props.onChangeTags(this.state.tags);
-                    onTagPress && onTagPress(index, tag, event, true);
-                  }
-                );
-              } else {
-                onTagPress && onTagPress(index, tag, event, false);
-              }
-            },
-            tagContainerStyle,
-            tagTextStyle
-          };
+        return renderTag(tagProps);
+      })}
 
-          return renderTag(tagProps);
-        })}
-
-        {!readonly && maxNumberOfTags > this.state.tags.length && (
-          <Input
-            value={this.state.text}
-            onChangeText={this.onChangeText}
-            onSubmitEditing={this.onSubmitEditing}
-            {...this.props}
-          />
-        )}
-      </View>
-    );
-  }
-}
+      {!readonly && maxNumberOfTags > tags.length && (
+        <Input
+          value={text}
+          onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
+          {...props}
+        />
+      )}
+    </View>
+  );
+};
 
 Tags.defaultProps = {
   initialTags: [],
-  initialText: ' ',
+  initialText: '',
   createTagOnString: [',', ' '],
   createTagOnReturn: true,
   readonly: false,
